@@ -39,6 +39,7 @@
 ****************************************************************************/
 
 #include "qgeoroutereplymapbox.h"
+#include "qgeoroutemapbox.h"
 #include "qgeoroutingmanagerenginemapbox.h"
 #include <QtLocation/private/qgeorouteparser_p.h>
 #include <QtCore/QJsonDocument>
@@ -81,10 +82,18 @@ void QGeoRouteReplyMapbox::networkReplyFinished()
 
     QList<QGeoRoute> routes;
     QString errorString;
-    QGeoRouteReply::Error error = parser->parseReply(routes, errorString, reply->readAll());
+    const QByteArray replyData = reply->readAll();
+    QGeoRouteReply::Error error = parser->parseReply(routes, errorString, replyData);
+
+    QList<QGeoRoute> mapboxRoutes;
+    for (const QGeoRoute &route : routes.mid(0, request().numberAlternativeRoutes() + 1)) {
+        QGeoRouteMapbox mapboxRoute(route);
+        mapboxRoute.setRouteQueryReply(replyData);
+        mapboxRoutes.append(mapboxRoute);
+    }
 
     if (error == QGeoRouteReply::NoError) {
-        setRoutes(routes.mid(0, request().numberAlternativeRoutes() + 1));
+        setRoutes(mapboxRoutes);
         // setError(QGeoRouteReply::NoError, status);  // can't do this, or NoError is emitted and does damages
         setFinished(true);
     } else {

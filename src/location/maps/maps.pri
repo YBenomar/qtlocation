@@ -9,6 +9,7 @@ PUBLIC_HEADERS += \
                     maps/qgeocodingmanager.h \
                     maps/qgeomaneuver.h \
                     maps/qgeoroute.h \
+                    maps/qgeoroutemapbox.h \
                     maps/qgeoroutereply.h \
                     maps/qgeorouterequest.h \
                     maps/qgeoroutesegment.h \
@@ -43,6 +44,7 @@ PRIVATE_HEADERS += \
                     maps/qgeomaptype_p.h \
                     maps/qgeomaptype_p_p.h \
                     maps/qgeoroute_p.h \
+                    maps/qgeoroutemapbox_p.h \
                     maps/qgeoroutereply_p.h \
                     maps/qgeorouterequest_p.h \
                     maps/qgeoroutesegment_p.h \
@@ -80,6 +82,7 @@ SOURCES += \
             maps/qgeotilefetcher.cpp \
             maps/qgeomaptype.cpp \
             maps/qgeoroute.cpp \
+            maps/qgeoroutemapbox.cpp \
             maps/qgeoroutereply.cpp \
             maps/qgeorouterequest.cpp \
             maps/qgeoroutesegment.cpp \
